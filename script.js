@@ -14,8 +14,10 @@ document.addEventListener('keydown', function(e) {
         const key = e.key.toUpperCase();
         if (['A', 'B', 'C', 'D', '1', '2', '3', '4'].includes(key)) {
             const questionInputs = document.querySelectorAll(`input[name="question${currentQuestion}"]`);
-            const index = ['1', '2', '3', '4'].includes(key) ? parseInt(key) - 1 : key.charCodeAt(0) - 65;
-            questionInputs[index].checked = true;
+            if (questionInputs.length > 0) {  // Guard clause added
+                const index = ['1', '2', '3', '4'].includes(key) ? parseInt(key) - 1 : key.charCodeAt(0) - 65;
+                questionInputs[index].checked = true;
+            }
         }
     }
 });
@@ -86,12 +88,12 @@ function showReorderPopup(numMC, numOpen, subject) {
     list.style.maxHeight = '260px';
     list.style.overflowY = 'auto';
     
+    // Render each draggable item with label "Question X - [Type]"
     questionOrder.forEach((q, index) => {
         const item = document.createElement('div');
         item.className = 'draggableItem';
         item.draggable = true;
         item.dataset.index = index;
-        // Update item style to follow CSS theme
         item.style.padding = '12px';
         item.style.border = '1px solid #ccc';
         item.style.background = '#f8f9fa';
@@ -99,7 +101,8 @@ function showReorderPopup(numMC, numOpen, subject) {
         item.style.cursor = 'move';
         item.style.fontFamily = "'Poppins', sans-serif";
         item.style.transition = 'background 0.3s ease';
-        item.textContent = q.label;
+        // NEW: Set text to sequential question number and type label
+        item.textContent = "Question " + (index + 1) + " - " + (q.type === 'mc' ? "Multiple Choice" : "Open Ended");
         
         // Updated drag events for intuitive moving:
         item.addEventListener('dragstart', (e) => {
@@ -174,7 +177,8 @@ function showReorderPopup(numMC, numOpen, subject) {
             item.style.cursor = 'move';
             item.style.fontFamily = "'Poppins', sans-serif";
             item.style.transition = 'background 0.3s ease';
-            item.textContent = q.label;
+            // NEW: Update text with new sequential number and type label
+            item.textContent = "Question " + (index + 1) + " - " + (q.type === 'mc' ? "Multiple Choice" : "Open Ended");
             
             item.addEventListener('dragstart', (e) => {
                 e.dataTransfer.setData('text/plain', index);
@@ -460,7 +464,6 @@ function showCorrectAnswersPopup(numQuestions, userAnswers) {
             input.type = 'text';
             input.name = `correctAnswer${i}`;
             input.required = true;
-            input.style.width = '100%';
             form.appendChild(label);
             form.appendChild(input);
         } else {
