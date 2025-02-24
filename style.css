@@ -183,8 +183,8 @@ body {
     font-weight: bold;
     color: #555;
 }
-.popup input {
-    width: 100%;
+.popup input, .popup select {
+    width: 100%; /* Ensure both input and select have the same width */
     padding: 12px;
     margin: 10px 0 20px;
     border: 1px solid #ccc;
@@ -274,10 +274,10 @@ body {
     text-align: center;
 }
 .answer-sheet {
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    max-width: 1400px; /* Increase max-width to allow larger answer sheet */
+    margin: 0 auto;
+    padding: 40px;
 }
 .answer-sheet h1 {
     margin-bottom: 20px;
@@ -447,7 +447,7 @@ body {
 
 .answer-sheet {
     position: relative;
-    max-width: 1200px;
+    max-width: 1400px; /* Increase max-width to allow larger answer sheet */
     margin: 0 auto;
     padding: 40px;
 }
@@ -779,4 +779,10 @@ opacity: 1;
     border-radius: 5px;
     resize: vertical;
     font-family: Poppins, sans-serif;
+}
+
+/* Add this rule to ensure open ended correct answer inputs match the select's width */
+#correctAnswersForm input[type="text"] {
+    width: 100% !important;
+    box-sizing: border-box;
 }
