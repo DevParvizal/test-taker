@@ -81,7 +81,7 @@ function toggleOpenEndedInput() {
 async function generateQuestions(subject, gradeLevel, numMC, numOpenEnded) {
     const totalQuestions = numMC + numOpenEnded;
     // Updated prompt to request challenging questions.
-    const prompt = `Generate exactly ${totalQuestions} challenging ${subject} questions for ${gradeLevel} grade, including ${numMC} multiple-choice questions and ${numOpenEnded} open-ended questions. All questions should be appropriate and challenging for the grade level. Use the following JSON format:
+    const prompt = `Generate exactly ${totalQuestions} challenging ${subject} questions for ${gradeLevel} grade, including ${numMC} multiple-choice questions and ${numOpenEnded} open-ended questions. All questions should be appropriate and challenging for the grade level, similar to questions in AMC 8-12 and UIL Math. Use the following JSON format:
 {
   "questions": [
     {
